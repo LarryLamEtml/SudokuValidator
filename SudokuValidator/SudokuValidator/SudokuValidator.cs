@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace SudokuValidator
 {
@@ -21,16 +22,18 @@ namespace SudokuValidator
         /// 
         /// </summary>
         /// <returns></returns>
-        public static int[,] generateDefaultSudoku()
+        public int[,] generateDefaultSudoku(int _sudokuSize)
         {
+          //  const int sudokuSize = _sudokuSize;
+
             //Taille du sudoku
-            const int _sudokuSize = 9;
+            const int sudokuSize = 9;
             //Valeur par défaut
             int emptyInt = 0;
             //Tableau avec le sudoku
-            int[,] arraySudoku = new int[_sudokuSize, _sudokuSize];
+            int[,] arraySudoku = new int[sudokuSize, sudokuSize];
             //Tableau de données "générée"
-            int[,] arraySudokuData = new int[_sudokuSize, _sudokuSize] {
+            int[,] arraySudokuData = new int[sudokuSize, sudokuSize] {
                 { 5, 3, emptyInt, emptyInt,7, emptyInt, emptyInt, emptyInt , emptyInt },
                 { 6, emptyInt, emptyInt, 1, 9, 5, emptyInt, emptyInt, emptyInt},
                 { emptyInt, 9, 8, emptyInt, emptyInt, emptyInt, emptyInt, 6 , emptyInt },
@@ -42,7 +45,7 @@ namespace SudokuValidator
                 { emptyInt, emptyInt, emptyInt, emptyInt, 8, emptyInt, emptyInt, 7 , 9 },
             };
             //Tableau de données entrées
-            int[,] arraySudokuInput = new int[_sudokuSize, _sudokuSize]{
+            int[,] arraySudokuInput = new int[sudokuSize, sudokuSize]{
                 { emptyInt, emptyInt, 4, 6, emptyInt, 8, 9, 1 , 2 },
                 { emptyInt, 7, 2,emptyInt ,emptyInt , emptyInt, 3, 4, 8},
                 { 1,emptyInt ,emptyInt , 3, 4, 2, 5, emptyInt , 7 },
@@ -56,7 +59,7 @@ namespace SudokuValidator
 
             //Fusionne les deux tableaux 
             //Parcours les lignes
-            for (int i = 0; i < _sudokuSize; i++)
+            for (int i = 0; i < sudokuSize; i++)
             {
                 //Parcours les colonnes
                 for (int j = 0; j < _sudokuSize; j++)
@@ -91,7 +94,34 @@ namespace SudokuValidator
         /// <returns></returns>
         public bool validateSudoku(int[,] _ArraySudoku, int SUDOKU_SIZE)
         {
-            if(!validateRow(_ArraySudoku, SUDOKU_SIZE))
+            if (!validateRow(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+            }
+            if (!validateColumn(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+            }
+            if (!validateSquare(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+
+            }
+            return true;
+
+        }
+
+        /// <summary>
+        /// Valide le sudoku en multi thread
+        /// </summary>
+        /// <param name="_ArraySudoku"></param>
+        /// <param name="SUDOKU_SIZE"></param>
+        /// <returns></returns>
+        public bool validateSudokuMultiThread(int[,] _ArraySudoku, int SUDOKU_SIZE)
+        {
+            Thread t = new Thread(validateRow(_ArraySudoku, SUDOKU_SIZE));
+            bool result = t.Start(validateRow(_ArraySudoku, SUDOKU_SIZE));
+            if (!validateRow(_ArraySudoku, SUDOKU_SIZE))
             {
                 return false;
             }
