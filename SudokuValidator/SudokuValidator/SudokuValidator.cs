@@ -10,49 +10,112 @@ using System.Linq;
 
 namespace SudokuValidator
 {
-    class Program
+    class SudokuValidator
     {
-        const int SUDOKU_SIZE = 9;
-        bool isValid = true;
-        static void Main(string[] args)
+        public SudokuValidator()
         {
-            int[,] arraySudoku = generateDefaultSudoku();
-            bool result = validateSudoku(arraySudoku);
-            if (result)
-            {
-                Console.WriteLine("Le sudoku est juste");
-            }
-            else
-            {
-                Console.WriteLine("Le sudoku est faux");
-            }
-            Console.ReadLine();
+
         }
 
-        /*public void generateSudoku(int _sudokuSize)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static int[,] generateDefaultSudoku()
         {
+            //Taille du sudoku
+            const int _sudokuSize = 9;
+            //Valeur par défaut
+            int emptyInt = 0;
+            //Tableau avec le sudoku
+            int[,] arraySudoku = new int[_sudokuSize, _sudokuSize];
+            //Tableau de données "générée"
+            int[,] arraySudokuData = new int[_sudokuSize, _sudokuSize] {
+                { 5, 3, emptyInt, emptyInt,7, emptyInt, emptyInt, emptyInt , emptyInt },
+                { 6, emptyInt, emptyInt, 1, 9, 5, emptyInt, emptyInt, emptyInt},
+                { emptyInt, 9, 8, emptyInt, emptyInt, emptyInt, emptyInt, 6 , emptyInt },
+                { 8, emptyInt, emptyInt, emptyInt, 6, emptyInt, emptyInt, emptyInt , 3 },
+                { 4, emptyInt, emptyInt, 8,emptyInt, 3, emptyInt, emptyInt , 1 },
+                { 7, emptyInt, emptyInt, emptyInt, 2, emptyInt, emptyInt, emptyInt , 6 },
+                { emptyInt, 6, emptyInt, emptyInt,emptyInt, emptyInt, 2, 8 , emptyInt },
+                { emptyInt, emptyInt, emptyInt, 4, 1, 9, emptyInt, emptyInt , 5 },
+                { emptyInt, emptyInt, emptyInt, emptyInt, 8, emptyInt, emptyInt, 7 , 9 },
+            };
+            //Tableau de données entrées
+            int[,] arraySudokuInput = new int[_sudokuSize, _sudokuSize]{
+                { emptyInt, emptyInt, 4, 6, emptyInt, 8, 9, 1 , 2 },
+                { emptyInt, 7, 2,emptyInt ,emptyInt , emptyInt, 3, 4, 8},
+                { 1,emptyInt ,emptyInt , 3, 4, 2, 5, emptyInt , 7 },
+                { emptyInt, 5, 9, 7,emptyInt, 1, 4, 2 , emptyInt },
+                { emptyInt, 2, 6, emptyInt,5, emptyInt, 7, 9 , emptyInt },
+                { emptyInt, 1, 3, 9, emptyInt, 4, 8, 5 ,  emptyInt},
+                { 9, emptyInt, 1, 5, 3, 7, emptyInt, emptyInt ,  4},
+                { 2, 8, 7, emptyInt, emptyInt, emptyInt, 6, 3 ,  emptyInt},
+                { 3, 4, 5, 2, emptyInt, 6, 1, emptyInt ,  emptyInt},
+            };
 
+            //Fusionne les deux tableaux 
+            //Parcours les lignes
             for (int i = 0; i < _sudokuSize; i++)
             {
+                //Parcours les colonnes
                 for (int j = 0; j < _sudokuSize; j++)
                 {
-
+                    //Si la valeur n'est pas "vide"
+                    if (arraySudokuData[i, j] != emptyInt)
+                    {
+                        //L'ajouter dans le tableau final
+                        arraySudoku[i, j] = arraySudokuData[i, j];
+                    }
+                    //Si la valeur n'est pas "vide"
+                    if (arraySudokuInput[i, j] != emptyInt)
+                    {
+                        //L'ajouter dans le tableau
+                        arraySudoku[i, j] = arraySudokuInput[i, j];
+                    }
+                    //Affiche le tableau
+                    Console.Write(arraySudoku[i, j] + " ");
                 }
+                //Retour à la ligne
+                Console.WriteLine();
             }
-        }*/
-        public static bool validateSudoku(int[,] _ArraySudoku)
+            //Retourne le tableau final
+            return arraySudoku;
+        }
+
+        /// <summary>
+        /// Valide le sudoku en 3 étapes
+        /// </summary>
+        /// <param name="_ArraySudoku"></param>
+        /// <param name="SUDOKU_SIZE"></param>
+        /// <returns></returns>
+        public bool validateSudoku(int[,] _ArraySudoku, int SUDOKU_SIZE)
+        {
+            if(!validateRow(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+            }
+            if (!validateColumn(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+            }
+            if (!validateSquare(_ArraySudoku, SUDOKU_SIZE))
+            {
+                return false;
+
+            }
+            return true;
+
+        }
+
+        private bool validateRow(int[,] _ArraySudoku, int SUDOKU_SIZE)
         {
             //Valeur à chercher (1->tailleX du sudoku) 
             int valueToCheck = 1;
             //index de la ligne
             int lineY = 0;
-            //Index de la colonne
-            int columnX = 0;
             //Variable de validation pour la valeur à chercher
             bool next = false;
-            
-            //---------------------------------Validation de chaque lignes horizontales---------------------------------\\
-
             //Parcours chaque ligne
             for (int i = 1; i < SUDOKU_SIZE; i++)
             {
@@ -84,8 +147,18 @@ namespace SudokuValidator
                 //Incrémenter la ligne
                 lineY++;
             }
+            return true;
+        }
 
-            //---------------------------------Validation de chaque lignes Verticales---------------------------------\\
+        private bool validateColumn(int[,] _ArraySudoku, int SUDOKU_SIZE)
+        {
+            //Valeur à chercher (1->tailleX du sudoku) 
+            int valueToCheck = 1;
+            //Index de la colonne
+            int columnX = 0;
+            //Variable de validation pour la valeur à chercher
+            bool next = false;
+
             //Parcours chaque colonne
             for (int i = 1; i < SUDOKU_SIZE; i++)
             {
@@ -117,8 +190,12 @@ namespace SudokuValidator
                 //Incrémenter la colonne
                 columnX++;
             }
-            valueToCheck = 1;
-            columnX = 0;
+            return true;
+        }
+
+        public bool validateSquare(int[,] _ArraySudoku, int SUDOKU_SIZE)
+        {
+            int columnX = 0;
             //SquareLenght
             int divider = Convert.ToInt32(Math.Sqrt(SUDOKU_SIZE));
 
@@ -134,7 +211,7 @@ namespace SudokuValidator
                     for (int x = 0; x < divider; x++)
                     {
                         //Ajout des (9) cases du carrés dans la liste 
-                        listSquare.Add(_ArraySudoku[line-1, columnX]);
+                        listSquare.Add(_ArraySudoku[line - 1, columnX]);
                         //Incrémente l'index X
                         columnX++;
                     }
@@ -145,7 +222,7 @@ namespace SudokuValidator
                     if (line % divider == 0 && line != 0)
                     {
                         //Si la liste contient des doublons
-                        if(listSquare.GroupBy(n => n).Any(c => c.Count() > 1))            
+                        if (listSquare.GroupBy(n => n).Any(c => c.Count() > 1))
                         {
                             //Retourne false
                             return false;
@@ -159,59 +236,6 @@ namespace SudokuValidator
             }
             //return true si tout est correct
             return true;
-
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static int[,] generateDefaultSudoku()
-        {
-            const int _sudokuSize = 9;
-            int emptyInt = 0;
-            int[,] arraySudoku = new int[_sudokuSize, _sudokuSize];
-            int[,] arraySudokuData = new int[_sudokuSize, _sudokuSize] {
-                { 5, 3, emptyInt, emptyInt,7, emptyInt, emptyInt, emptyInt , emptyInt },
-                { 6, emptyInt, emptyInt, 1, 9, 5, emptyInt, emptyInt, emptyInt},
-                { emptyInt, 9, 8, emptyInt, emptyInt, emptyInt, emptyInt, 6 , emptyInt },
-                { 8, emptyInt, emptyInt, emptyInt, 6, emptyInt, emptyInt, emptyInt , 3 },
-                { 4, emptyInt, emptyInt, 8,emptyInt, 3, emptyInt, emptyInt , 1 },
-                { 7, emptyInt, emptyInt, emptyInt, 2, emptyInt, emptyInt, emptyInt , 6 },
-                { emptyInt, 6, emptyInt, emptyInt,emptyInt, emptyInt, 2, 8 , emptyInt },
-                { emptyInt, emptyInt, emptyInt, 4, 1, 9, emptyInt, emptyInt , 5 },
-                { emptyInt, emptyInt, emptyInt, emptyInt, 8, emptyInt, emptyInt, 7 , 9 },
-            };
-            int[,] arraySudokuInput = new int[_sudokuSize, _sudokuSize]{
-                { emptyInt, emptyInt, 4, 6, emptyInt, 8, 9, 1 , 2 },
-                { emptyInt, 7, 2,emptyInt ,emptyInt , emptyInt, 3, 4, 8},
-                { 1,emptyInt ,emptyInt , 3, 4, 2, 5, emptyInt , 7 },
-                { emptyInt, 5, 9, 7,emptyInt, 1, 4, 2 , emptyInt },
-                { emptyInt, 2, 6, emptyInt,5, emptyInt, 7, 9 , emptyInt },
-                { emptyInt, 1, 3, 9, emptyInt, 4, 8, 5 ,  emptyInt},
-                { 9, emptyInt, 1, 5, 3, 7, emptyInt, emptyInt ,  4},
-                { 2, 8, 7, emptyInt, emptyInt, emptyInt, 6, 3 ,  emptyInt},
-                { 3, 4, 5, 2, emptyInt, 6, 1, emptyInt ,  emptyInt},
-            };
-
-            for (int i = 0; i < _sudokuSize; i++)
-            {
-                for (int j = 0; j < _sudokuSize; j++)
-                {
-                    if (arraySudokuData[i, j] != 0)
-                    {
-                        arraySudoku[i, j] = arraySudokuData[i, j];
-                    }
-                    if (arraySudokuInput[i, j] != 0)
-                    {
-                        arraySudoku[i, j] = arraySudokuInput[i, j];
-                    }
-                    Console.Write(arraySudoku[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-            return arraySudoku;
         }
     }
 }
