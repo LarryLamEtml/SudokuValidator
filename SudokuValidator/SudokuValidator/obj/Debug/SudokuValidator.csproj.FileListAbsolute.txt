@@ -1,0 +1,14 @@
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.exe.config
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.exe
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.pdb
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.csprojResolveAssemblyReference.cache
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.csproj.CoreCompileInputs.cache
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.exe
+F:\155-ProceduresTempsReel\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.pdb
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.exe.config
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.exe
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\bin\Debug\SudokuValidator.pdb
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.csprojResolveAssemblyReference.cache
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.csproj.CoreCompileInputs.cache
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.exe
+F:\155-ProceduresTempsReel\Github\SudokuValidator\SudokuValidator\obj\Debug\SudokuValidator.pdb
