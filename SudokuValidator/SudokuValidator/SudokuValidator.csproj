@@ -45,6 +45,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SudokuValidator.cs" />
+    <Compile Include="SudokuValidatorV2.cs" />
+    <Compile Include="ThreadMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
